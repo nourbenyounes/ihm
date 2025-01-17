@@ -1,118 +1,109 @@
-// backend/server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+
+const app = express();
+const PORT = 3000;
+
+// Configuration de CORS
 const corsOptions = {
-  origin: 'http://localhost:4200', // Update with your Angular app's origin
+  origin: 'http://localhost:4200', // L'URL de ton app Angular
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
 };
-const app = express();
-const PORT = 3000;
 
-app.use(cors());
-app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // Utilisation de CORS avec les options définies
+app.use(express.json()); // Pour parser les requêtes JSON
 
-// MongoDB connection
-mongoose.connect('mongodb://localhost:27017/projetweb', {
+// Connexion à MongoDB
+mongoose.connect('mongodb://localhost:27017/projetihm', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => console.log('Connecté à MongoDB'))
+  .catch((error) => console.error('Erreur de connexion à MongoDB :', error));
 
+// Définition du schéma Mongoose pour les cours
+const coursSchema = new mongoose.Schema({
+  titre: String,
+  description: String,
+});
+// Schéma de l'utilisateur
+const utilisateurSchema = new mongoose.Schema({
+  utilisateurId: { type: String, required: true ,unique:true},
+  nomUtilisateur: { type: String, required: true },
+  email: { type: String, required: true },
+  cours: [{
+        coursId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Cours',
+        },
+        progression: {
+            type: Number, // pourcentage de progression, de 0 à 100
+            default: 0,
+        },
+    }],
 });
 
-// Define MongoDB Schema and Model for Médecin
-const medecinSchema = new mongoose.Schema({
-  name: String,
-  specialty: String,
-  address: String,
-  contact: String,
-});
+const Cours = mongoose.model('Cours', coursSchema);
+const Utilisateur = mongoose.model('Utilisateur', utilisateurSchema);
 
-const Medecin = mongoose.model('Medecin', medecinSchema);
-
-// API endpoint to get all Médecins
-app.get('/api/medecins', async (req, res) => {
+// Route GET pour récupérer tous les cours
+app.get('/api/cours', async (req, res) => {
   try {
-    const medecins = await Medecin.find();
-    res.json(medecins);
+    const cours = await Cours.find();
+    res.json(cours);
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ message: 'Erreur lors de la récupération des cours.' });
   }
 });
-// Add a new medecin
-app.post('/api/medecins', async (req, res) => {
-  console.log('Received request body:', req.body);
-
+app.get('/api/cours/:id', async (req, res) => {
   try {
-    const { id, name, speciality, address, contact } = req.body;
-
-    if (!name || !speciality || !address || !contact) {
-      return res.status(400).json({ error: 'All fields are required' });
+    const cours = await Cours.findById(req.params.id);
+    if (!cours) {
+      return res.status(404).json({ message: 'Cours non trouvé.' });
     }
-
-    const newMedecin = {
-      id,
-      name,
-      speciality,
-      address,
-      contact,
-    };
-
-    const addedMedecin = await Medecin.create(newMedecin);
-    res.json(addedMedecin);
+    res.json(cours);
   } catch (error) {
-    console.error('Error adding medecin:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ message: 'Erreur lors de la récupération du cours.' });
   }
 });
-app.get('/api/medecins/:id', async (req, res) => {
+
+app.post('/api/utilisateur/:id/cours/:coursId', async (req, res) => {
+  const { id, coursId } = req.params;
+  console.log("Utilisateur ID:", id);
+  console.log("Cours ID:", coursId);
+
   try {
-    const medecin = await Medecin.findById(req.params.id);
-    if (!medecin) {
-      return res.status(404).json({ error: 'Medecin not found' });
-    }
-    res.json(medecin);
+      const utilisateur = await Utilisateur.findOne({ utilisateurId: id });
+      if (!utilisateur) {
+          return res.status(404).send('Utilisateur non trouvé');
+      }
+
+      // Vérifiez si le cours est déjà ajouté
+      const coursExist = utilisateur.cours.find(c => c.coursId.toString() === coursId);
+      if (coursExist) {
+          return res.status(400).send('Ce cours est déjà ajouté');
+      }
+
+      utilisateur.cours.push({ coursId, progression: 0 });
+      await utilisateur.save();
+      res.status(201).json({ message: 'Cours ajouté avec succès' });
+
   } catch (error) {
-    console.error('Error getting medecin by ID:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-// Update a medecin by ID
-app.put('/api/medecins/:id', async (req, res) => {
-  try {
-    const updatedMedecin = await Medecin.findByIdAndUpdate(req.params.id, req.body, {
-      new: true, // Return the updated medecin
-      runValidators: true, // Run validation on update
-    });
-
-    if (!updatedMedecin) {
-      return res.status(404).json({ error: 'Medecin not found' });
-    }
-
-    res.json(updatedMedecin);
-  } catch (error) {
-    console.error('Error updating medecin:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-app.delete('/api/medecins/:id', async (req, res) => {
-  try {
-    const deletedMedecin = await Medecin.findByIdAndDelete(req.params.id);
-
-    if (!deletedMedecin) {
-      return res.status(404).json({ error: 'Medecin not found' });
-    }
-
-    res.json({ message: 'Medecin deleted successfully' });
-  } catch (error) {
-    console.error('Error deleting medecin:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+      console.error("Erreur du serveur:", error);
+      res.status(500).send(`Erreur du serveur: ${error.message}`);
   }
 });
 
-app.options('*', cors());
 
-// Start the server
+
+
+
+
+
+// Démarrage du serveur
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Le serveur tourne sur http://localhost:${PORT}`);
 });

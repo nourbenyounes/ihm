@@ -1,0 +1,12 @@
+<div class="container">
+  <h1>Découvrez nos cours !</h1>
+  <div class="cours-list">
+    <div *ngFor="let coursItem of cours" class="cours-item">
+      <h2>{{ coursItem.titre }}</h2>
+      <p>{{ coursItem.description }}</p>
+      <button (click)="ajouterCours(coursItem._id)">Ajouter</button>
+    </div>
+  </div>
+</div>
+
+

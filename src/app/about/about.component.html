@@ -1,29 +1,45 @@
-<div class="container" >
-  <h2 style="text-align:center">Notre equipe</h2>
-  <div class="roww" >
-    <div class="columnn">
-      <div class="carde">
-        <img class="image"src="https://drive.google.com/uc?export=view&id=1eUfvHszhgzRn7amcbu_q4U81a51CKzvn" alt="Nour" style="width:100%">
-        <div class="containerr">
-          <h2>Nour Benyounes</h2>
-          <p class="title">CEO and co-founder </p>
-          <p>Some text that describes us.</p>
-          <p>sawssanour@site.com</p>
-        </div>
+<div class="container">
+  <h1 class="title">Posez vos questions !</h1>
+
+  <!-- Input pour poser des questions -->
+  <div class="input-wrapper">
+    <input
+      type="text"
+      placeholder="Posez votre question"
+      class="question-input"
+      [(ngModel)]="userQuestion"
+      (input)="onQuestionInput($event)" />
+    <button (click)="askQuestion()" class="submit-btn">Envoyer</button>
+    <span class="close-icon" (click)="clearInput()">&times;</span>
+  </div>
+
+  <!-- Affichage de la réponse ou des suggestions -->
+  <div *ngIf="result">
+    <h3>Résultat :</h3>
+    <p>{{ result }}</p>
+  </div>
+
+  <!-- Section des questions similaires -->
+  <div class="section">
+    <h2>Questions et réponses similaires :</h2>
+    <div *ngFor="let q of similarQuestions" class="question-block">
+      <div class="question">
+        <span class="icon">👤</span>
+        <p class="question-text">{{ q.question }}</p>
+      </div>
+      <div class="answer">
+        <p>{{ q.answer }}</p>
       </div>
     </div>
+  </div>
 
-    <div class="columnn">
-      <div class="carde">
-        <img class="image"src="https://drive.google.com/uc?export=view&id=1rWhTSEMnTIRgISVMu7cV_MtIdP4IcscW" alt="Sawssan" style="width:100%">
-        <div class="containerr">
-          <h2>Sawssan Cherif</h2>
-          <p class="title">CEO and co-founder</p>
-          <p>Some text that describes us.</p>
-          <p>sawssanour@site.com</p>
-        </div>
-      </div>
-    </div>
-
+  <!-- Section des questions populaires -->
+  <div class="section">
+    <h2>Questions populaires :</h2>
+    <ul class="popular-questions">
+      <li *ngFor="let question of popularQuestions">
+        {{ question }}
+      </li>
+    </ul>
   </div>
 </div>

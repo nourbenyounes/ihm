@@ -1,0 +1,60 @@
+/* Style général pour les dropdowns (select) */
+.favv{padding:15%;  padding-top: 5%;
+}
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+}
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #f9f9f9;
+}
+
+/* Ajouter un petit effet lorsqu'on survole le dropdown */
+select:hover {
+  border-color: #007bff;
+}
+
+/* Style pour le conteneur de la case sélectionnée */
+.selected-box {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 14px;
+}
+
+/* Style pour chaque label */
+label {
+  font-weight: bold;
+  display: block;
+  margin: 10px 0 5px 0;
+  font-size: 16px;
+}
+
+/* Style pour le bouton valider */
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

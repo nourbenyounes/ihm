@@ -1,0 +1,10 @@
+.cercle {
+  position: absolute;
+  border-radius: 50%; /* Forme circulaire */
+  background-color: var(--color); /* Couleur dynamique */
+  width: var(--size);
+  height: var(--size);
+  top: var(--position-y);
+  left: var(--position-x);
+  transform: translate(-50%, -50%);
+}

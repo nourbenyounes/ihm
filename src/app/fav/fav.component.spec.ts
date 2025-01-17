@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListemedComponent } from './listemed.component';
+import { FavComponent } from './fav.component';
 
-describe('ListemedComponent', () => {
-  let component: ListemedComponent;
-  let fixture: ComponentFixture<ListemedComponent>;
+describe('FavComponent', () => {
+  let component: FavComponent;
+  let fixture: ComponentFixture<FavComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ListemedComponent]
+      declarations: [FavComponent]
     });
-    fixture = TestBed.createComponent(ListemedComponent);
+    fixture = TestBed.createComponent(FavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

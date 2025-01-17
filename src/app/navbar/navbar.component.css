@@ -5,7 +5,7 @@
   height: 50px;
   left: 0px;
   top: 0px;
-  background: #21B6A8;
+  background: #592ACD;
   overflow: hidden
 }
 .an {
@@ -17,7 +17,7 @@
   font-size: 17px;
 }
 .an:hover {
-  background-color: #98D7C2;
+  background-color: #9c8ac9;
   color: black;
 }
 .topnav img {
@@ -44,11 +44,11 @@
 
 }
 .bar{    border-radius: 10px;
-    border-color: #5996c2;
+    border-color: #9c8ac9;
 
 }
 .search:hover {
-  background-color: #98D7C2;
+  background-color: #9c8ac9;
   color: white;
 }
 .signn{

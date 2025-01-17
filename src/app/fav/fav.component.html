@@ -1,0 +1,55 @@
+<div class="favv">
+  <div>
+    <label>Matières préférées</label>
+    <select (change)="addChoice('matieres', $event)">
+      <option *ngFor="let matiere of matieres" [value]="matiere">{{ matiere }}</option>
+    </select>
+    <div class="selected-box" *ngFor="let selected of selectedMatieres">
+      {{ selected }}
+      <button class="remove-btn" (click)="removeChoice('matieres', selected)">X</button>
+    </div>
+  </div>
+
+  <div>
+    <label>Langues parlées</label>
+    <select (change)="addChoice('langues', $event)">
+      <option *ngFor="let langue of langues" [value]="langue">{{ langue }}</option>
+    </select>
+    <div class="selected-box" *ngFor="let selected of selectedLangues">
+      {{ selected }}
+      <button class="remove-btn" (click)="removeChoice('langues', selected)">X</button>
+    </div>
+  </div>
+
+  <div>
+    <label>Centres d’intérêt professionnels</label>
+    <select (change)="addChoice('interets', $event)">
+      <option *ngFor="let interet of interets" [value]="interet">{{ interet }}</option>
+    </select>
+    <div class="selected-box" *ngFor="let selected of selectedInterets">
+      {{ selected }}
+      <button class="remove-btn" (click)="removeChoice('interets', selected)">X</button>
+    </div>
+  </div>
+
+  <div>
+    <label>Compétences clés</label>
+    <select (change)="addChoice('competences', $event)">
+      <option *ngFor="let competence of competences" [value]="competence">{{ competence }}</option>
+    </select>
+    <div class="selected-box" *ngFor="let selected of selectedCompetences">
+      {{ selected }}
+      <button class="remove-btn" (click)="removeChoice('competences', selected)">X</button>
+    </div>
+  </div>
+
+  <div>
+    <label>Objectif professionnel</label>
+    <input type="text" (change)="setObjectif($event)" placeholder="Objectif professionnel">
+    <div class="selected-box" *ngIf="objectif">
+      {{ objectif }}
+      <button class="remove-btn" (click)="removeObjectif()">X</button>
+    </div>
+  </div>
+
+</div>
