@@ -40,7 +40,7 @@ stages:
 
     - script: |
         cd app  
-        ng test --watch=false --browsers=ChromeHeadless || true
+        ng test --watch=false --browsers=ChromeHeadless 
       displayName: 'Run Tests'
 
 
