@@ -59,7 +59,7 @@ stages:
         #repository: $(imageRepository) 
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'  
-        tags: '$(Build.BuildId)'  
+        tags: '2.0' 
       displayName: 'Build and Push Docker Image'
 - stage: DeployToDockerDesktop
   displayName: Deploy to Docker Desktop
@@ -70,6 +70,6 @@ stages:
     steps:
     - script: |
         echo "Deploying Docker container to Docker Desktop"
-        docker load -i $(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar
-        docker run -d -p 80:80 $(Build.BuildId)
+        docker load -i $(Build.ArtifactStagingDirectory)/2.0.tar
+        docker run -d -p 80:80 2.0
       displayName: 'Deploy Docker Image to Docker Desktop'
