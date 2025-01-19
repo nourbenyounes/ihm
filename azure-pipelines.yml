@@ -59,17 +59,10 @@ stages:
         #repository: $(imageRepository) 
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'  
-        tags: '2.0' 
+        tags: '$(Build.BuildId)' 
       displayName: 'Build and Push Docker Image'
-- stage: DeployToDockerDesktop
-  displayName: Deploy to Docker Desktop
-  dependsOn: DockerBuildAndPush
-  jobs:
-  - job: DeployToDockerDesktop
-    displayName: Deploy to Docker Desktop
-    steps:
     - script: |
-        echo "Deploying Docker container to Docker Desktop"
-        docker load -i $(Build.ArtifactStagingDirectory)/2.0.tar
-        docker run -d -p 80:80 2.0
-      displayName: 'Deploy Docker Image to Docker Desktop'
+        echo "Running custom Docker Desktop step..."
+        # Insert your custom Docker Desktop script here (e.g., for local testing or deployment)
+        docker run -d -p 80:80 $(containerRegistry)/my-app:$(Build.BuildId)
+      displayName: 'Deploy'
