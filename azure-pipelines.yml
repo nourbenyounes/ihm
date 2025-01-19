@@ -62,7 +62,5 @@ stages:
         tags: '$(Build.BuildId)' 
       displayName: 'Build and Push Docker Image'
     - script: |
-        echo "Running custom Docker Desktop step..."
-        # Insert your custom Docker Desktop script here (e.g., for local testing or deployment)
-        docker run -d -p 80:80 $(containerRegistry)/my-app:$(Build.BuildId)
+        docker run -d -p 80:80 $(containerRegistry)/projetweb:$(Build.BuildId)
       displayName: 'Deploy'
