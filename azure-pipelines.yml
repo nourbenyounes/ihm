@@ -70,7 +70,7 @@ stages:
     displayName: Deploy Docker Image Locally
     steps:
     - script: |
-        docker login -u $(DOCKER_USERNAME) -p $(DOCKER_PASSWORD)  # Use pipeline secrets
+        docker login $(containerRegistry) -u $(DOCKER_USERNAME) -p $(DOCKER_PASSWORD)
 
         echo "Deploying Docker image locally to Docker Desktop"
         docker pull $(containerRegistry)/$(imageRepository):$(Build.BuildId)
