@@ -11,7 +11,7 @@ pool:
 variables:
   system.debug: true
   containerRegistry: 'registry0'
-  imageRepository: 'imagerepository0'
+  #imageRepository: 'imagerepository0'
 
 stages:
 - stage: BuildAndTest
