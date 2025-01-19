@@ -74,3 +74,27 @@ stages:
 
         docker run -d -p 8080:80 docker.io/$(imageRepository):$(Build.BuildId)
       displayName: 'Deploy Docker Image '
+- stage: Monitoring
+  displayName: Monitoring with Prometheus and Grafana
+  dependsOn: DockerDeployToDesktop
+  jobs:
+  - job: MonitoringSetup
+    displayName: Setup Prometheus and Grafana Containers
+    steps:
+    - script: |
+        # Run Prometheus container
+        docker run -d --name prometheus -p 9090:9090 prom/prometheus
+        # Run Grafana container
+        docker run -d --name grafana -p 3000:3000 grafana/grafana
+      displayName: 'Run Prometheus and Grafana Containers'
+
+    - script: |
+        # Configure Grafana to connect to Prometheus
+        docker exec -it grafana /bin/bash -c \
+        "curl -X POST -H 'Content-Type: application/json' -d '{
+          \"name\": \"Prometheus\",
+          \"type\": \"prometheus\",
+          \"url\": \"http://prometheus:9090\",
+          \"access\": \"proxy\"
+        }' http://admin:admin@localhost:3000/api/datasources/"
+      displayName: 'Configure Grafana Data Source'
