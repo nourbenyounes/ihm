@@ -33,13 +33,13 @@ stages:
       displayName: 'Install Angular CLI'
 
     - script: |
-        cd front-end  # Adjust if your folder path differs
+        cd app  
         npm install --frozen-lockfile
         npm run build --prod
       displayName: 'Build Frontend'
 
     - script: |
-        cd front-end  # Ensure you're in the correct directory
+        cd app  
         ng test --watch=false --browsers=ChromeHeadless
       displayName: 'Run Tests'
 
