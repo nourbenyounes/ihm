@@ -20,24 +20,29 @@ stages:
     steps:
     - task: NodeTool@0
       inputs:
-        versionSpec: '16.x'
+        versionSpec: '18.x'  # Node.js 18 or higher
       displayName: 'Install Node.js'
+
+    - script: |
+        node -v
+        npm -v
+      displayName: 'Verify Node.js and npm Versions'
 
     - script: |
         npm install -g @angular/cli
       displayName: 'Install Angular CLI'
 
     - script: |
-        cd front-end
+        cd front-end  # Adjust if your folder path differs
         npm install --frozen-lockfile
         npm run build --prod
       displayName: 'Build Frontend'
 
     - script: |
-        echo "Running tests..."
-        cd front-end
+        cd front-end  # Ensure you're in the correct directory
         ng test --watch=false --browsers=ChromeHeadless
       displayName: 'Run Tests'
+
 
 
 - stage: Package
