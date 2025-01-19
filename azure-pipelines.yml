@@ -107,6 +107,10 @@ stages:
     displayName: Setup Prometheus and Grafana Containers
     steps:
     - script: |
+        docker stop prometheus
+        docker rm prometheus
+        docker stop grafana
+        docker rm grafana
         # Run Prometheus container
         docker run -d --name prometheus -p 9090:9090 prom/prometheus
         # Run Grafana container
