@@ -72,5 +72,5 @@ stages:
     - script: |
         docker pull docker.io/$(imageRepository):$(Build.BuildId)
 
-        docker run -d -p 80:80 docker.io/$(imageRepository):$(Build.BuildId)
+        docker run -d -p 8080:80 docker.io/$(imageRepository):$(Build.BuildId)
       displayName: 'Deploy Docker Image Locally to Docker Desktop'
