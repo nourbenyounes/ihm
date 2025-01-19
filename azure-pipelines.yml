@@ -76,7 +76,12 @@ stages:
             docker stop %%i
             docker rm %%i
         )
-
+        REM Check if port 8080 is still in use by a process
+        FOR /F "tokens=3" %%i IN ('netstat -aon ^| findstr :8080') DO (
+            echo Port 8080 is being used by process with PID %%i
+            echo Killing process with PID %%i
+            taskkill /F /PID %%i
+        )
         REM Deploy new Docker container       
         docker pull docker.io/$(imageRepository):$(Build.BuildId)
 
