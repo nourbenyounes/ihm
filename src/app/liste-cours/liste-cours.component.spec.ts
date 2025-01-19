@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListeCoursComponent } from './liste-cours.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ListeCoursComponent', () => {
   let component: ListeCoursComponent;
