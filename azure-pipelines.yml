@@ -61,14 +61,15 @@ stages:
         Dockerfile: '**/Dockerfile'  
         tags: '$(Build.BuildId)'  
       displayName: 'Build and Push Docker Image'
-- stage: DockerDeployment
-  displayName: Docker Desktop Deployment
+- stage: DeployToDockerDesktop
+  displayName: Deploy to Docker Desktop
   dependsOn: DockerBuildAndPush
   jobs:
   - job: DeployToDockerDesktop
-    displayName: Deploy Docker Image to Desktop
+    displayName: Deploy to Docker Desktop
     steps:
     - script: |
-        docker pull $(containerRegistry)/$(imageRepository):$(Build.BuildId)
-        docker run -d -p 8080:80 $(containerRegistry)/$(imageRepository):$(Build.BuildId)
-      displayName: 'Deploy Docker Image to Desktop'
+        echo "Deploying Docker container to Docker Desktop"
+        docker load -i $(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar
+        docker run -d -p 80:80 $(Build.BuildId)
+      displayName: 'Deploy Docker Image to Docker Desktop'
