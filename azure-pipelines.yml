@@ -67,12 +67,11 @@ stages:
   dependsOn: DockerBuildAndPush
   jobs:
   - job: DockerDeployToDesktop
-    displayName: Deploy Docker Image Locally
+    displayName: Deploy Docker Image 
     steps:
     - script: |
         docker login $(containerRegistry) -u $(DOCKER_USERNAME) -p $(DOCKER_PASSWORD)
 
         echo "Deploying Docker image locally to Docker Desktop"
-        docker pull $(containerRegistry)/$(imageRepository):$(Build.BuildId)
         docker run -d -p 8080:80 $(containerRegistry)/$(imageRepository):$(Build.BuildId)
       displayName: 'Deploy Docker Image Locally to Docker Desktop'
