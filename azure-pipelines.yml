@@ -84,8 +84,19 @@ stages:
             taskkill /F /PID %%i
         )
 
-        REM Add a small delay to ensure port 8080 is fully freed
-        timeout /t 5 /nobreak
+        REM Retry logic to check if port 8080 is still free
+        SET retries=0
+        :retry
+        FOR /F "tokens=3" %%i IN ('netstat -aon ^| findstr :8080') DO (
+            echo Port 8080 is still occupied. Retrying...
+            SET /A retries+=1
+            IF %retries% GEQ 5 (
+                echo Port 8080 is still occupied after 5 attempts. Exiting.
+                exit /b 1
+            )
+            timeout /t 5 /nobreak
+            GOTO retry
+        )
 
         REM Deploy new Docker container       
         docker pull docker.io/$(imageRepository):$(Build.BuildId)
@@ -96,7 +107,8 @@ stages:
             exit /b 1
         )
 
-        docker run -d -p 8080:80 docker.io/$(imageRepository):$(Build.BuildId)
+        REM Optionally use a different port (8081 in this case)
+        docker run -d -p 8081:80 docker.io/$(imageRepository):$(Build.BuildId)
       displayName: 'Deploy Docker Image '
 
 - stage: Monitoring
