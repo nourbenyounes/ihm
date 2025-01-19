@@ -63,7 +63,7 @@ stages:
       displayName: 'Build and Push Docker Image'
     
 - stage: DockerDeployToDesktop
-  displayName: Deploy Docker Image to Docker Desktop
+  displayName: Deploy Docker Image
   dependsOn: DockerBuildAndPush
   jobs:
   - job: DockerDeployToDesktop
@@ -73,4 +73,4 @@ stages:
         docker pull docker.io/$(imageRepository):$(Build.BuildId)
 
         docker run -d -p 8080:80 docker.io/$(imageRepository):$(Build.BuildId)
-      displayName: 'Deploy Docker Image Locally to Docker Desktop'
+      displayName: 'Deploy Docker Image '
