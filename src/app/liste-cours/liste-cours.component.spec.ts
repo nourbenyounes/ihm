@@ -9,6 +9,8 @@ describe('ListeCoursComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+          imports: [HttpClientTestingModule],
+
       declarations: [ListeCoursComponent]
     });
     fixture = TestBed.createComponent(ListeCoursComponent);
