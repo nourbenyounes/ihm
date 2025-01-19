@@ -62,3 +62,15 @@ stages:
         tags: '$(Build.BuildId)' 
       displayName: 'Build and Push Docker Image'
     
+- stage: DockerDeployToDesktop
+  displayName: Deploy Docker Image to Docker Desktop
+  dependsOn: DockerBuildAndPush
+  jobs:
+  - job: DockerDeployToDesktop
+    displayName: Deploy Docker Image Locally
+    steps:
+    - script: |
+        echo "Deploying Docker image locally to Docker Desktop"
+        docker pull $(containerRegistry)/$(imageRepository):$(Build.BuildId)
+        docker run -d -p 8080:80 $(containerRegistry)/$(imageRepository):$(Build.BuildId)
+      displayName: 'Deploy Docker Image Locally to Docker Desktop'
