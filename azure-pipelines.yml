@@ -24,6 +24,10 @@ stages:
       displayName: 'Install Node.js'
 
     - script: |
+        npm install -g @angular/cli
+      displayName: 'Install Angular CLI'
+
+    - script: |
         cd front-end
         npm install --frozen-lockfile
         npm run build --prod
@@ -31,8 +35,10 @@ stages:
 
     - script: |
         echo "Running tests..."
+        cd front-end
         ng test --watch=false --browsers=ChromeHeadless
       displayName: 'Run Tests'
+
 
 - stage: Package
   displayName: Package Docker Image
