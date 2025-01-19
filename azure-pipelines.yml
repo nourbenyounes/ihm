@@ -11,7 +11,7 @@ pool:
 variables:
   system.debug: true
   containerRegistry: 'registry0'
-  imageRepository: 'projetweb'
+  imageRepository: 'nouuur1/projetweb'
 
 stages:
 - stage: BuildAndTest
