@@ -56,7 +56,7 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: registry0  
-        repository: $(containerRegistry)/$(imageRepository)  
+        repository: $(imageRepository)  
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'  
         tags: '$(Build.BuildId)' 
