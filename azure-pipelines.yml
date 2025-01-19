@@ -120,6 +120,7 @@ stages:
           \"name\": \"Prometheus\",
           \"type\": \"prometheus\",
           \"url\": \"http://prometheus:9090\",
-          \"access\": \"proxy\"
+          \"access\": \"proxy\" 
         }' http://admin:admin@localhost:3000/api/datasources/"
+
       displayName: 'Configure Grafana Data Source'
