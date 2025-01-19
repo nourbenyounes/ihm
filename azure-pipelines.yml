@@ -70,6 +70,13 @@ stages:
     displayName: Deploy Docker Image 
     steps:
     - script: |
+        # Stop any container using port 8080
+        container_id=$(docker ps -q --filter "expose=8080")
+        if [ ! -z "$container_id" ]; then
+          docker stop $container_id
+          docker rm $container_id
+        fi
+       
         docker pull docker.io/$(imageRepository):$(Build.BuildId)
 
         docker run -d -p 8080:80 docker.io/$(imageRepository):$(Build.BuildId)
