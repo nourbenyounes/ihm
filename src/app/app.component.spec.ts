@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
+import { FormsModule } from '@angular/forms'; 
 import { AppComponent } from './app.component';
-import { AboutComponent } from './about/about.component'; // Import AboutComponent
-import { NavbarComponent } from './navbar/navbar.component'; // Import NavbarComponent
+import { AboutComponent } from './about/about.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule, FormsModule], // Add FormsModule to support ngModel
-    declarations: [AppComponent, AboutComponent, NavbarComponent] // Declare your components
+    imports: [RouterTestingModule, FormsModule],
+    declarations: [AppComponent, AboutComponent, NavbarComponent]
   }));
 
   it('should create the app', () => {
@@ -17,10 +17,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'dev_web'`, () => {
+  it(`should have as title 'dev_web app is running!'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('dev_web');
+    expect(app.title).toEqual('dev_web app is running!');
   });
 
   it('should render title', () => {
@@ -33,8 +33,8 @@ describe('AppComponent', () => {
 
 describe('AboutComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [FormsModule], // Import FormsModule if needed in AboutComponent
-    declarations: [AboutComponent] // Declare AboutComponent
+    imports: [FormsModule],
+    declarations: [AboutComponent]
   }));
 
   it('should create the About component', () => {
@@ -46,7 +46,7 @@ describe('AboutComponent', () => {
 
 describe('NavbarComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    declarations: [NavbarComponent] // Declare NavbarComponent
+    declarations: [NavbarComponent]
   }));
 
   it('should create the Navbar component', () => {
