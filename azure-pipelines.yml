@@ -70,14 +70,14 @@ stages:
     displayName: Deploy Docker Image 
     steps:
     - script: |
-        REM Stop any container using port 8080
-        FOR /F "tokens=*" %%i IN ('docker ps -q --filter "expose=8080"') DO (
+        REM Ensure no container is using port 8080
+        FOR /F "tokens=*" %%i IN ('docker ps -q --filter "publish=8080"') DO (
+            echo Stopping and removing container %%i
             docker stop %%i
             docker rm %%i
         )
 
-        REM Deploy new Docker container
-       
+        REM Deploy new Docker container       
         docker pull docker.io/$(imageRepository):$(Build.BuildId)
 
         docker run -d -p 8080:80 docker.io/$(imageRepository):$(Build.BuildId)
