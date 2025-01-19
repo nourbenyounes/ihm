@@ -55,12 +55,10 @@ stages:
     steps:
     - task: Docker@2
       inputs:
-        containerRegistry: $(containerRegistry)  
-        #repository: $(imageRepository) 
+        containerRegistry: registry0  
+        repository: $(containerRegistry)/$(imageRepository)  
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'  
         tags: '$(Build.BuildId)' 
       displayName: 'Build and Push Docker Image'
-    - script: |
-        docker run -d -p 80:80 $(containerRegistry)/projetweb:$(Build.BuildId)
-      displayName: 'Deploy'
+    
