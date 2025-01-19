@@ -46,14 +46,18 @@ stages:
       displayName: 'Run Tests'
 
 
-
-- stage: Package
-  displayName: Package Docker Image
+- stage: DockerBuildAndPush
+  displayName: Docker Build and Push
+  dependsOn: BuildAndTest  # Ensure this stage runs after BuildAndTest
   jobs:
-  - job: Package
-    displayName: Package Docker Image
+  - job: DockerBuildAndPush
+    displayName: Build and Push Docker Image
     steps:
-    - script: |
-        docker build -t $(containerRegistry)/$(imageRepository):$(Build.BuildId) .
-        docker push $(containerRegistry)/$(imageRepository):$(Build.BuildId)
-      displayName: 'Build and Push Docker Image'
+    - task: Docker@2
+      inputs:
+        containerRegistry: $(containerRegistry)  # Container registry name
+        repository: $(imageRepository)  # Repository name
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'  # Path to your Dockerfile
+        tags: '$(Build.BuildId)'  # Optional: You can tag the image with the build ID
+      displayName: 'Build and Push Docker Image'
