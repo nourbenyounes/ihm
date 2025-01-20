@@ -107,13 +107,12 @@ stages:
             exit /b 1
         )
 
-        REM Optionally use a different port (8082 in this case)
-        docker run -d -p 8082:80 docker.io/$(imageRepository):$(Build.BuildId)
+        REM Optionally use a different port (8083 in this case)
+        docker run -d -p 8083:80 docker.io/$(imageRepository):$(Build.BuildId)
       displayName: 'Deploy Docker Image '
 
 - stage: Monitoring
   displayName: Monitoring with Prometheus and Grafana
-  dependsOn: DockerDeployToDesktop
   jobs:
   - job: MonitoringSetup
     displayName: Setup Prometheus and Grafana Containers
