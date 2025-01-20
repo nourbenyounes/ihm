@@ -107,8 +107,8 @@ stages:
             exit /b 1
         )
 
-        REM Optionally use a different port (8081 in this case)
-        docker run -d -p 8081:80 docker.io/$(imageRepository):$(Build.BuildId)
+        REM Optionally use a different port (8082 in this case)
+        docker run -d -p 8082:80 docker.io/$(imageRepository):$(Build.BuildId)
       displayName: 'Deploy Docker Image '
 
 - stage: Monitoring
