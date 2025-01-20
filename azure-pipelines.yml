@@ -131,6 +131,6 @@ stages:
 
     - powershell: |
         # Configure Grafana to connect to Prometheus
-        docker exec -it grafana powershell -Command \
-        "curl -X POST -H 'Content-Type: application/json' -d '{ \"name\": \"Prometheus\", \"type\": \"prometheus\", \"url\": \"http://prometheus:9090\", \"access\": \"proxy\" }' http://admin:admin@localhost:3000/api/datasources/"
+        docker exec -it grafana powershell -Command `
+        "curl -X POST -H 'Content-Type: application/json' -d '{\"name\": \"Prometheus\", \"type\": \"prometheus\", \"url\": \"http://prometheus:9090\", \"access\": \"proxy\"}' http://admin:admin@localhost:3000/api/datasources/"
       displayName: 'Configure Grafana Data Source'
