@@ -107,8 +107,8 @@ stages:
             exit /b 1
         )
 
-        REM Optionally use a different port (8083 in this case)
-        docker run -d -p 8083:80 docker.io/$(imageRepository):$(Build.BuildId)
+        REM Optionally use a different port (8084 in this case)
+        docker run -d -p 8084:80 docker.io/$(imageRepository):$(Build.BuildId)
       displayName: 'Deploy Docker Image '
 
 - stage: Monitoring
@@ -128,6 +128,5 @@ stages:
         docker run -d --name grafana -p 3000:3000 grafana/grafana
       displayName: 'Run Prometheus and Grafana Containers'
     - script: |
-        # Configure Grafana to connect to Prometheus
         docker exec -it grafana curl -X POST -H 'Content-Type: application/json' -d '{ "name": "Prometheus", "type": "prometheus", "url": "http://prometheus:9090", "access": "proxy" }' http://admin:admin@localhost:3000/api/datasources/
       displayName: 'Configure Grafana Data Source '
